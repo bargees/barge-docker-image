@@ -1,0 +1,6 @@
+.DS_Store
+
+.vagrant/
+
+*.tar
+*.tar.xz

@@ -1,0 +1,11 @@
+.DS_Store
+
+.git/
+
+docker-root/
+
+Makefile
+README.md
+
+Vagrantfile
+.vagrant/
