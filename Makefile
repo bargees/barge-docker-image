@@ -7,7 +7,7 @@ image: Dockerfile docker-root.tar
 
 docker-root.tar: docker-root/Dockerfile docker-root/rootfs.tar.xz
 	docker build -t docker-root docker-root
-	docker run --name docker-root docker-root rm -f /usr/bin/docker
+	docker run --name docker-root docker-root
 	docker export docker-root > $@
 	docker rm docker-root
 
