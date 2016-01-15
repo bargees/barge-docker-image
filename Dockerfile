@@ -1,3 +1,4 @@
 FROM scratch
 ADD docker-root.tar /
-CMD ["/bin/bash"]
+ENTRYPOINT ["/usr/bin/dumb-init"]
+CMD ["-c", "/bin/bash"]
