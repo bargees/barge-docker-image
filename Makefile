@@ -3,6 +3,7 @@ VERSION := 1.2.10
 
 image: Dockerfile docker-root.tar
 	docker build -t $(IMAGE) .
+	-docker rmi $(IMAGE):$(VERSION)
 	docker tag $(IMAGE):latest $(IMAGE):$(VERSION)
 
 docker-root.tar: docker-root/Dockerfile docker-root/rootfs.tar.xz
