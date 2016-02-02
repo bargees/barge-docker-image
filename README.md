@@ -14,4 +14,4 @@ COPY dnsdock /dnsdock
 CMD ["/dnsdock"]
 ```
 
-The original [tonistiigi/dnsdock](https://hub.docker.com/r/tonistiigi/dnsdock/) image (633MB) becomes 26MB.
+The original [tonistiigi/dnsdock](https://hub.docker.com/r/tonistiigi/dnsdock/) image (650MB) becomes 26MB.
