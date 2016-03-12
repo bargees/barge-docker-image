@@ -1,5 +1,5 @@
 IMAGE   := ailispaw/docker-root
-VERSION := 1.3.2
+VERSION := 1.3.3
 
 image: Dockerfile docker-root.tar
 	docker build -t $(IMAGE) .
