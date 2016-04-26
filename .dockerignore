@@ -2,7 +2,7 @@
 
 .git/
 
-docker-root/
+barge/
 
 Makefile
 README.md

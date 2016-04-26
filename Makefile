@@ -1,19 +1,19 @@
-IMAGE   := ailispaw/docker-root
-VERSION := 1.3.10
+IMAGE   := ailispaw/barge
+VERSION := 2.0.0
 
-image: Dockerfile docker-root.tar
+image: Dockerfile barge.tar
 	docker build -t $(IMAGE) .
 	-docker rmi $(IMAGE):$(VERSION)
 	docker tag $(IMAGE):latest $(IMAGE):$(VERSION)
 
-docker-root.tar: docker-root/Dockerfile docker-root/rootfs.tar.xz
-	docker build -t docker-root docker-root
-	docker run --name docker-root docker-root
-	docker export docker-root > $@
-	docker rm docker-root
+barge.tar: barge/Dockerfile barge/rootfs.tar.xz
+	docker build -t barge barge
+	docker run --name barge barge
+	docker export barge > $@
+	docker rm barge
 
-docker-root/rootfs.tar.xz:
-	curl -L https://github.com/ailispaw/docker-root/releases/download/v$(VERSION)/rootfs.tar.xz \
+barge/rootfs.tar.xz:
+	curl -L https://github.com/bargees/barge/releases/download/$(VERSION)/rootfs.tar.xz \
 		-o $@
 
 release:
@@ -21,8 +21,8 @@ release:
 	docker push $(IMAGE):$(VERSION)
 
 clean:
-	$(RM) -f docker-root/rootfs.tar.xz
-	$(RM) -f docker-root.tar
-	-docker rmi docker-root $(IMAGE):latest $(IMAGE):$(VERSION)
+	$(RM) -f barge/rootfs.tar.xz
+	$(RM) -f barge.tar
+	-docker rmi barge $(IMAGE):latest $(IMAGE):$(VERSION)
 
 .PHONY: image release clean
