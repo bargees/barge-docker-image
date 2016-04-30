@@ -13,8 +13,7 @@ barge.tar: barge/Dockerfile barge/rootfs.tar.xz
 	docker rm barge
 
 barge/rootfs.tar.xz:
-	curl -L https://github.com/bargees/barge/releases/download/$(VERSION)/rootfs.tar.xz \
-		-o $@
+	curl -L https://github.com/bargees/barge-os/releases/download/$(VERSION)/$(@F) -o $@
 
 release:
 	docker push $(IMAGE):latest
