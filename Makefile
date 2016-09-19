@@ -8,7 +8,7 @@ image: Dockerfile barge.tar
 
 barge.tar: barge/Dockerfile barge/rootfs.tar.xz
 	docker build -t barge barge
-	docker run --name barge barge
+	docker create --name barge barge
 	docker export barge > $@
 	docker rm barge
 
