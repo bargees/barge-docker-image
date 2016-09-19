@@ -2,9 +2,9 @@ IMAGE   := ailispaw/barge
 VERSION := 2.3.0
 
 image: Dockerfile barge.tar
-	docker build -t $(IMAGE) .
-	-docker rmi $(IMAGE):$(VERSION)
-	docker tag $(IMAGE):latest $(IMAGE):$(VERSION)
+	docker build -t $(IMAGE):armhf .
+	-docker rmi $(IMAGE):$(VERSION)-armhf
+	docker tag $(IMAGE):armhf $(IMAGE):$(VERSION)-armhf
 
 barge.tar: barge/Dockerfile barge/rootfs.tar.xz
 	docker build -t barge barge
@@ -13,15 +13,15 @@ barge.tar: barge/Dockerfile barge/rootfs.tar.xz
 	docker rm barge
 
 barge/rootfs.tar.xz:
-	curl -L https://github.com/bargees/barge-os/releases/download/$(VERSION)/$(@F) -o $@
+	wget -qO $@ https://github.com/bargees/barge-os/releases/download/$(VERSION)-rpi/$(@F)
 
 release:
-	docker push $(IMAGE):latest
-	docker push $(IMAGE):$(VERSION)
+	docker push $(IMAGE):armhf
+	docker push $(IMAGE):$(VERSION)-armhf
 
 clean:
 	$(RM) -f barge/rootfs.tar.xz
 	$(RM) -f barge.tar
-	-docker rmi barge $(IMAGE):latest $(IMAGE):$(VERSION)
+	-docker rmi barge $(IMAGE):armhf $(IMAGE):$(VERSION)-armhf
 
 .PHONY: image release clean
