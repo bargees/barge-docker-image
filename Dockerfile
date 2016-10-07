@@ -1,3 +1,4 @@
 FROM scratch
 ADD barge.tar /
-CMD [ "bash" ]
+ENTRYPOINT [ "dumb-init" ]
+CMD [ "-c", "bash" ]

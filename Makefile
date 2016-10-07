@@ -13,7 +13,7 @@ barge.tar: barge/Dockerfile barge/rootfs.tar.xz
 	docker rm barge
 
 barge/rootfs.tar.xz:
-	wget -qO $@ https://github.com/bargees/barge-os/releases/download/$(VERSION)-rpi/$(@F)
+	wget -qO $@ https://github.com/bargees/barge-os/releases/download/$(VERSION)-rpi.1/$(@F)
 
 release:
 	docker push $(IMAGE):armhf
