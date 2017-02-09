@@ -1,5 +1,5 @@
 IMAGE   := ailispaw/barge
-VERSION := 2.3.5
+VERSION := 2.3.6
 
 image: Dockerfile barge.tar
 	docker build -t $(IMAGE) .
