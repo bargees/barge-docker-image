@@ -12,4 +12,5 @@ Vagrant.configure(2) do |config|
   config.vm.define "barge-docker-image"
 
   config.vm.box = "ailispaw/barge"
+  config.vm.box_version = ">= 2.4.0"
 end
