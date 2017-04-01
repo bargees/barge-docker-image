@@ -1,9 +1,12 @@
 IMAGE   := ailispaw/barge
 VERSION := 2.4.3
 
-image: Dockerfile barge.tar
-	docker build -t $(IMAGE) .
-	-docker rmi $(IMAGE):$(VERSION)
+image: barge.tar
+	cat barge.tar | docker import \
+		-c 'ENTRYPOINT [ "dumb-init" ]' \
+		-c 'CMD [ "bash" ]' \
+		-m 'https://github.com/bargees/barge-docker-image' \
+		- $(IMAGE)
 	docker tag $(IMAGE):latest $(IMAGE):$(VERSION)
 
 barge.tar: barge/Dockerfile barge/rootfs.tar.xz
