@@ -2,8 +2,6 @@
 
 .git/
 
-barge/
-
 Makefile
 README.md
 

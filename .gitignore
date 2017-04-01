@@ -2,5 +2,4 @@
 
 .vagrant/
 
-*.tar
 *.tar.xz
