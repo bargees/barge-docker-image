@@ -2,38 +2,38 @@ IMAGE   := ailispaw/barge
 VERSION := 2.5.4
 
 image: Dockerfile rootfs.tar.xz
-	docker build -t barge .
-	docker create --name barge barge
-	docker export barge | docker import \
+	docker build -t barge:armhf .
+	docker create --name barge-armhf barge:armhf
+	docker export barge-armhf | docker import \
 		-c 'ENTRYPOINT [ "dumb-init" ]' \
 		-c 'CMD [ "bash" ]' \
 		-m 'https://github.com/bargees/barge-docker-image' \
-		- $(IMAGE):docker
-	docker tag $(IMAGE):docker $(IMAGE):$(VERSION)-docker
-	docker rm barge
+		- $(IMAGE):docker-armhf
+	docker tag $(IMAGE):docker-armhf $(IMAGE):$(VERSION)-docker-armhf
+	docker rm barge-armhf
 
-	docker run --name barge barge rm -f /usr/bin/docker
-	docker export barge | docker import \
+	docker run --name barge-armhf barge:armhf rm -f /usr/bin/docker
+	docker export barge-armhf | docker import \
 		-c 'ENTRYPOINT [ "dumb-init" ]' \
 		-c 'CMD [ "bash" ]' \
 		-m 'https://github.com/bargees/barge-docker-image' \
-		- $(IMAGE)
-	docker tag $(IMAGE):latest $(IMAGE):$(VERSION)
-	docker rm barge
+		- $(IMAGE):armhf
+	docker tag $(IMAGE):armhf $(IMAGE):$(VERSION)-armhf
+	docker rm barge-armhf
 
 rootfs.tar.xz:
-	curl -L https://github.com/bargees/barge-os/releases/download/$(VERSION)/$(@F) -o $@
+	 wget -qO $@ https://github.com/bargees/barge-os/releases/download/$(VERSION)-rpi/$(@F)
 
 release:
-	docker push $(IMAGE):latest
-	docker push $(IMAGE):$(VERSION)
-	docker push $(IMAGE):docker
-	docker push $(IMAGE):$(VERSION)-docker
+	docker push $(IMAGE):armhf
+	docker push $(IMAGE):$(VERSION)-armhf
+	docker push $(IMAGE):docker-armhf
+	docker push $(IMAGE):$(VERSION)-docker-armhf
 
 clean:
 	$(RM) -f rootfs.tar.xz
 	-docker rmi `docker images -q -f dangling=true`
-	-docker rmi barge $(IMAGE):latest $(IMAGE):$(VERSION)
-	-docker rmi barge $(IMAGE):docker $(IMAGE):$(VERSION)-docker
+	-docker rmi barge $(IMAGE):armhf $(IMAGE):$(VERSION)-armhf
+	-docker rmi barge $(IMAGE):docker-armhf $(IMAGE):$(VERSION)-docker-armhf
 
 .PHONY: image release clean
