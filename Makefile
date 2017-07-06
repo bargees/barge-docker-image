@@ -1,5 +1,5 @@
 IMAGE   := ailispaw/barge
-VERSION := 2.5.3
+VERSION := 2.5.4
 
 image: Dockerfile rootfs.tar.xz
 	docker build -t barge .
