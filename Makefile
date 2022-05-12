@@ -12,7 +12,16 @@ image: Dockerfile rootfs.tar.xz
 	docker tag $(IMAGE):docker $(IMAGE):$(VERSION)-docker
 	docker rm barge
 
-	docker run --name barge barge rm -f /usr/bin/docker
+	docker run --name barge barge rm -f /usr/bin/docker \
+		/usr/bin/dockerd \
+		/usr/bin/containerd \
+		/usr/bin/containerd-shim \
+		/usr/bin/containerd-shim-runc-v1 \
+		/usr/bin/containerd-shim-runc-v2 \
+		/usr/bin/ctr \
+		/usr/bin/docker-init \
+		/usr/bin/docker-proxy \
+		/usr/bin/runc
 	docker export barge | docker import \
 		-c 'ENTRYPOINT [ "dumb-init" ]' \
 		-c 'CMD [ "bash" ]' \
